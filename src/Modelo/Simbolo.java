@@ -1,4 +1,4 @@
-package datos;
+package Modelo;
 
 /**
  * Created by Andrés Ramos Seguí.

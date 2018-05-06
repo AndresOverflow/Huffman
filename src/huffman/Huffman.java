@@ -5,6 +5,8 @@
  */
 package huffman;
 
+import Vista.MainPage;
+
 /**
  *
  * @author AndresOverflow
@@ -16,6 +18,7 @@ public class Huffman {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        new MainPage().setVisible(true);
 }
     
 }

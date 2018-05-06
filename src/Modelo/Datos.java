@@ -1,4 +1,4 @@
-package datos;
+package Modelo;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package calculo;
+package Controlador;
 
-import datos.Datos;
+import Modelo.Datos;
 import huffman.Huffman;
 
 /**
@@ -18,7 +18,7 @@ public class Proceso {
      */
     private final Huffman prog;
     /**
-     * Puntero a la parte de la aplicación que contiene los datos del programa
+     * Puntero a la parte de la aplicación que contiene los Modelo del programa
      * (al modelo).
      */
     private Datos datos;
@@ -27,5 +27,6 @@ public class Proceso {
     public Proceso(Huffman p, int n) {
         prog = p;
     }
+
     
 }
