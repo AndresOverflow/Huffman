@@ -1,5 +1,7 @@
 package Vista;
 
+import Controlador.Controler;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,11 +16,14 @@ public class MainPage extends JFrame{
     private JButton examinarButton;
     private JPanel mainPanel;
     private JFrame page = this;
+    private Controler controlador;
 
     public MainPage() {
+        controlador = new Controler();
         init();
         examinarButton.addActionListener(e -> {
             JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File ("D:/Games/Nueva carpeta/Huffman"));
 
             int seleccion = fc.showOpenDialog(page);
 
@@ -26,6 +31,13 @@ public class MainPage extends JFrame{
                 File fichero = fc.getSelectedFile();
                 textField1.setText(fichero.getAbsolutePath());
 
+            }
+        });
+        comprimirButton.addActionListener(e -> {
+            String path = textField1.getText();
+            File fichero = new File(path);
+            if (fichero.exists()){
+                controlador.readFile(fichero);
             }
         });
     }
