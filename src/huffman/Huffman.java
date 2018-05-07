@@ -5,7 +5,9 @@
  */
 package huffman;
 
+import Modelo.Datos;
 import Vista.MainPage;
+import Vista.ResultPage;
 
 /**
  *
@@ -19,6 +21,6 @@ public class Huffman {
     public static void main(String[] args) {
         // TODO code application logic here
         new MainPage().setVisible(true);
-}
+    }
     
 }

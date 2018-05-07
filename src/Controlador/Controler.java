@@ -7,14 +7,13 @@ import org.apache.commons.io.IOUtils;
 
 public class Controler {
 
-    Datos modelo;
+    private Datos modelo;
 
-    public Controler(){
-        modelo = new Datos();
+    public Controler(Datos modelo){
+        this.modelo = modelo;
     }
 
     public void readFile(File fichero){
-        BufferedReader buffer;
         FileReader reader;
         byte[] bytes;
         try{
@@ -25,7 +24,7 @@ public class Controler {
             }
             reader.close();
         }catch (IOException e){
-            System.out.println("a");
+            System.out.println("error");
         }
         modelo.showFrecuencias();
     }
