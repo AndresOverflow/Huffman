@@ -59,6 +59,11 @@ public class Datos implements InterfazModelo{
     }
 
     @Override
+    public String getHaffmanValue(byte simbolo) {
+        return tablaSimbolos.getHuffmanValue(new Simbolo(simbolo));
+    }
+
+    @Override
     public String[] getColumnNames(){
         return COLUMN_NAMES;
     }

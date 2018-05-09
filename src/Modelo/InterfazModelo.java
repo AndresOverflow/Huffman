@@ -14,6 +14,6 @@ public interface InterfazModelo {
     void addSimbolo(int simbolo);
     void showFrecuencias();
     void setHaffmanValue(byte simbol, String value);
-
+    String getHaffmanValue(byte simbolo);
 
 }

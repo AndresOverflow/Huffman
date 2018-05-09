@@ -3,7 +3,6 @@ package Modelo;
 import java.util.ArrayList;
 
 public class TablaFrecuencias {
-    private byte[] caracteresExcluidos = System.getProperty("line.separator").getBytes();
 
     private ArrayList<Simbolo> tabla;
 
@@ -12,11 +11,6 @@ public class TablaFrecuencias {
     }
 
     public void addSimbolo(Simbolo simbolo){
-        for (byte b : caracteresExcluidos) {
-            if (simbolo.getValor_ascii() == b){
-                return;
-            }
-        }
         int pos = tabla.indexOf(simbolo);
         if (pos != -1){
             tabla.get(pos).addUnoMas();
@@ -38,6 +32,10 @@ public class TablaFrecuencias {
 
     public Simbolo getSimbolo(int pos){
         return tabla.get(pos);
+    }
+
+    public String getHuffmanValue(Simbolo simbolo){
+        return tabla.get(tabla.indexOf(simbolo)).getHaffmanValue();
     }
 
     public void setValue(byte simbolo, String value){
