@@ -1,16 +1,52 @@
 package Controlador;
 
-import Modelo.Datos;
-
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import Controlador.HeapNodos.HeapNodos;
+import Controlador.HeapNodos.Nodo;
+import Modelo.InterfazModelo;
 import org.apache.commons.io.IOUtils;
 
-public class Controler {
+public class Controler implements InterfazControler{
 
-    private Datos modelo;
+    private InterfazModelo modelo;
+    private HeapNodos lista;
+    private int escala;
 
-    public Controler(Datos modelo){
+    public Controler(InterfazModelo modelo){
         this.modelo = modelo;
+    }
+
+    private double fileLenght(){
+        double lenght = modelo.getFileLenght();
+        escala = 0;
+        while(lenght > 1024){
+            lenght /= 1024;
+            escala++;
+        }
+        return lenght;
+    }
+
+    public String getFileLenght(){
+        BigDecimal tm = new BigDecimal(fileLenght());
+        StringBuilder lenght = new StringBuilder().append(tm.setScale(2, RoundingMode.HALF_UP));
+        switch (escala){
+            case 0:
+                lenght.append(" B");
+                break;
+            case 1:
+                lenght.append(" KB");
+                break;
+            case 2:
+                lenght.append(" MB");
+                break;
+            case 3:
+                lenght.append(" GB");
+                break;
+        }
+        return lenght.toString();
     }
 
     public void readFile(File fichero){
@@ -18,7 +54,8 @@ public class Controler {
         byte[] bytes;
         try{
             reader = new FileReader(fichero);
-            bytes = IOUtils.toByteArray(reader);
+            bytes = IOUtils.toByteArray(reader, "UTF8");
+            modelo.setFileLenght(fichero.length());
             for (byte b : bytes) {
                 modelo.addSimbolo(b);
             }
@@ -28,4 +65,47 @@ public class Controler {
         }
         modelo.showFrecuencias();
     }
+
+    public void generarArbolHuffman(){
+        int sizeTable = modelo.sizeTable();
+        //generamos la lista ordenada de menor a mayor
+        lista = new HeapNodos(sizeTable);
+        for (int it = 0; it < sizeTable; it++){
+            lista.addNodo(new Nodo(modelo.getValue(it), modelo.getFrecuencia(it)));
+        }
+        do{
+            Nodo[] primeros = lista.getPrimeros();
+            if (primeros[0] != null && primeros[1] != null){
+                Nodo nuevo = new Nodo(primeros[0].getCompareValue() + primeros[1].getCompareValue());
+                nuevo.setCero(primeros[0]);
+                nuevo.setUno(primeros[1]);
+                lista.addNodo(nuevo);
+            }
+        } while(lista.quedanNodos());
+
+    }
+
+    public void setHaffmanValues(){
+        recorrerLista(lista.getNodo(),"");
+    }
+
+    public void recorrerLista(Nodo nodo, String value){
+        if(!nodo.isInterno()){
+            modelo.setHaffmanValue(nodo.getId(), value);
+        } else {
+            if (nodo.getCero() != null){
+                recorrerLista(nodo.getCero(), value + "0");
+            }
+            if (nodo.getUno() != null){
+                recorrerLista(nodo.getUno(), value + "1");
+            }
+        }
+    }
+
+    public void showData(){
+        do{
+            System.out.println(lista.getNodo().toString());
+        }while (!lista.isEmpty());
+    }
+
 }
